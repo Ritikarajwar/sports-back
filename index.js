@@ -35,6 +35,8 @@ app.post('/login', async (req, res) => {
     let details = await db.collection('login').find({}).toArray()
     let name = req.body.username
     let passcode = req.body.password
+    // console.log(name)
+    // console.log(passcode)
 
 
     // let i
@@ -44,7 +46,7 @@ app.post('/login', async (req, res) => {
     //             console.log('login successfull')
     //             res.send(JSON.stringify('login successfull'))
     //             i=details.length
-    //         }
+    //         } 
     //         else{
     //             console.log("wrong password")
     //             res.send(JSON.stringify("wrong password"))
@@ -59,7 +61,8 @@ app.post('/login', async (req, res) => {
     let exist = true
     for (i = 0; i < details.length; i++) {
         if (details[i].username == name && details[i].password == passcode && exist) {
-            // console.log('login successfull')
+
+            console.log('login successfull')
             // res.send(JSON.stringify('login successfull'))
             i = details.length
             exist = false
