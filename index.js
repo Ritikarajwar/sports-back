@@ -11,7 +11,7 @@ const port = 8052;
 let db;
 
 app.use(express.json());
-app.use(cors({ origin: "http://127.0.0.1:5500" }));
+app.use(cors({ origin: "https://sport-front.onrender.com" }));
 app.use(express.urlencoded({ extended: false }))
 app.use('/uploads', express.static('uploads'))
 
