@@ -33,7 +33,7 @@ app.options("/", (req, res) => {
 
 app.post('/login', async (req, res) => {
     let details = await db.collection('login').find({}).toArray()
-    console.log(details)
+    // console.log(details)
     let name = req.body.username
     let passcode = req.body.password
     // console.log(name)
@@ -84,7 +84,7 @@ app.post('/login', async (req, res) => {
         res.send(JSON.stringify(token))
     }
     if (exist == true) {
-        res.send(JSON.stringify('check username & password'))
+        res.send(JSON.stringify(details))
     }
 
 
