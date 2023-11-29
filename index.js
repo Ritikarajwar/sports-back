@@ -33,6 +33,7 @@ app.options("/", (req, res) => {
 
 app.post('/login', async (req, res) => {
     let details = await db.collection('login').find({}).toArray()
+    console.log(details)
     let name = req.body.username
     let passcode = req.body.password
     // console.log(name)
