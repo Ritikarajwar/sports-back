@@ -32,13 +32,14 @@ app.options("/", (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    let details =await db.collection('loginuser').find().toArray()
+    // let details =await db.collection('loginuser').find().toArray()
+    let details = await db.collection('loginuser').find({username,password})
     // console.log(details.length)
     // res.send(details)
     // res.send(JSON.stringify(details))
     let name = req.body.username
     let passcode = req.body.password
-    let i
+    let i   
     let exist = true
     for (i = 0; i < details.length; i++) {
         if (details[i].username == name && details[i].password == passcode && exist) {
