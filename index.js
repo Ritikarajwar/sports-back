@@ -61,7 +61,7 @@ app.post('/login', async (req, res) => {
         res.send(JSON.stringify(token))
     }
     if (exist == true) {
-        res.send(JSON.stringify('check username and passcode'))
+        res.send(details)
     }
 
 
