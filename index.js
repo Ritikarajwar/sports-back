@@ -32,38 +32,37 @@ app.options("/", (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    // let details =await db.collection('loginuser').find().toArray()
-    let details = await db.collection('loginuser').find({username,password})
+    let details =await db.collection('loginuser').find().toArray()
     // console.log(details.length)
-    res.send(details)
+    // res.send(details)
     // res.send(JSON.stringify(details))
-    // let name = req.body.username
-    // let passcode = req.body.password
-    // let i   
-    // let exist = true
-    // for (i = 0; i < details.length; i++) {
-    //     if (details[i].username == name && details[i].password == passcode && exist) {
+    let name = req.body.username
+    let passcode = req.body.password
+    let i   
+    let exist = true
+    for (i = 0; i < details.length; i++) {
+        if (details[i].username == name && details[i].password == passcode && exist) {
 
-    //         // console.log('login successfull')
+            // console.log('login successfull')
 
-    //         i = details.length
-    //         exist = false
-    //     }
+            i = details.length
+            exist = false
+        }
 
-    // }
-    // let token
-    // if (exist == false) {
-    //     token = jwt.sign(
-    //         { name },
-    //         'secretkey',
-    //         { expiresIn: 60 }
-    //     )
-    //     // console.log(token)
-    //     res.send(JSON.stringify(token))
-    // }
-    // if (exist == true) {
-    //     res.send(details)
-    // }
+    }
+    let token
+    if (exist == false) {
+        token = jwt.sign(
+            { name },
+            'secretkey',
+            { expiresIn: 60 }
+        )
+        // console.log(token)
+        res.send(JSON.stringify(token))
+    }
+    if (exist == true) {
+        res.send(details)
+    }
 
 
 
