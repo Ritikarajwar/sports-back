@@ -32,7 +32,7 @@ app.options("/", (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    let details =await db.collection('loginuser').find({username,password}).toArray()
+    let details =await db.collection('loginuser').find().toArray()
     // console.log(details.length)
     // res.send(details)
     // res.send(JSON.stringify(details))
