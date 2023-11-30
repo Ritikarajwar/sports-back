@@ -11,7 +11,7 @@ const port = 8052;
 let db;
 
 app.use(express.json());
-app.use(cors({ origin: "https://sport-front.onrender.com" }));
+app.use(cors({ origin: "https://sport-front.onrender.com"}));
 app.use(express.urlencoded({ extended: false }))
 app.use('/uploads', express.static('uploads'))
 
@@ -32,46 +32,23 @@ app.options("/", (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-    let details = await db.collection('login').find({}).toArray()
-    // console.log(details)
+    let details =await db.collection('login').find().toArray()
+    // console.log(details.length)
+    // res.send(details)
+    // res.send(JSON.stringify(details))
     let name = req.body.username
     let passcode = req.body.password
-    // console.log(name)
-    // console.log(passcode)
-
-
-    // let i
-    // for(i=0; i<details.length;i++){
-    //     if (details[i].username==name){
-    //         if(details[i].password==passcode){
-    //             console.log('login successfull')
-    //             res.send(JSON.stringify('login successfull'))
-    //             i=details.length
-    //         } 
-    //         else{
-    //             console.log("wrong password")
-    //             res.send(JSON.stringify("wrong password"))
-    //         }
-    //     }else{
-    //         console.log('wrong username')
-    //         res.send(JSON.stringify("wrong username"))
-    //     }
-    // }
-    // console.log(hello)
     let i
     let exist = true
     for (i = 0; i < details.length; i++) {
         if (details[i].username == name && details[i].password == passcode && exist) {
 
-            console.log('login successfull')
-            // res.send(JSON.stringify('login successfull'))
+            // console.log('login successfull')
+
             i = details.length
             exist = false
         }
-        // else
-        // {
-        //     console.log('wrong')
-        // }
+
     }
     let token
     if (exist == false) {
@@ -80,11 +57,11 @@ app.post('/login', async (req, res) => {
             'secretkey',
             { expiresIn: 60 }
         )
-        console.log(token)
+        // console.log(token)
         res.send(JSON.stringify(token))
     }
     if (exist == true) {
-        res.send(JSON.stringify(details))
+        res.send(JSON.stringify('check username and passcode'))
     }
 
 
