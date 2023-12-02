@@ -31,42 +31,66 @@ app.options("/", (req, res) => {
     res.sendStatus(200)
 })
 
+// app.post('/login', async (req, res) => {
+//     let details =await db.collection('loginuser').find().toArray()
+//     // console.log(details.length)
+//     // res.send(details)
+//     // res.send(JSON.stringify(details))
+//     let name = req.body.username
+//     let passcode = req.body.password
+//     let i   
+//     let exist = true
+//     for (i = 0; i < details.length; i++) {
+//         if (details[i].username == name && details[i].password == passcode && exist) {
+
+//             // console.log('login successfull')
+
+//             i = details.length
+//             exist = false
+//         }
+
+//     }
+//     let token
+//     if (exist == false) {
+//         token = jwt.sign(
+//             { name },
+//             'secretkey',
+//             { expiresIn: 60 }
+//         )
+//         // console.log(token)
+//         res.send(JSON.stringify(token))
+//     }
+//     if (exist == true) {
+//         res.send(details)
+//     }
+
+
+
+// })
+
+
 app.post('/login', async (req, res) => {
-    let details =await db.collection('loginuser').find().toArray()
-    // console.log(details.length)
-    // res.send(details)
-    // res.send(JSON.stringify(details))
-    let name = req.body.username
-    let passcode = req.body.password
-    let i   
-    let exist = true
-    for (i = 0; i < details.length; i++) {
-        if (details[i].username == name && details[i].password == passcode && exist) {
+    try {
+        let details = await db.collection('loginuser').find().toArray();
+        let name = req.body.username;
+        let passcode = req.body.password;
+        
+        let user = details.find(user => user.username === name && user.password === passcode);
 
-            // console.log('login successfull')
-
-            i = details.length
-            exist = false
+        if (user) {
+            let token = jwt.sign({ name }, 'secretkey', { expiresIn: 60 });
+            res.send(JSON.stringify({ token }));
+        } else {
+            res.status(401).send("Invalid credentials");
         }
-
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).send("Internal Server Error");
     }
-    let token
-    if (exist == false) {
-        token = jwt.sign(
-            { name },
-            'secretkey',
-            { expiresIn: 60 }
-        )
-        // console.log(token)
-        res.send(JSON.stringify(token))
-    }
-    if (exist == true) {
-        res.send(details)
-    }
+});
 
 
 
-})
 
 
 app.post("/playerrecord", async (req, res) => {
