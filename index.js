@@ -81,11 +81,11 @@ app.post('/login', async (req, res) => {
             let token = jwt.sign({ name }, 'secretkey', { expiresIn: 60 });
             res.send(JSON.stringify({ token }));
         } else {
-            res.status(401).send("Invalid credentials");
+            res.status(401).send(JSON.stringify("Invalid credentials"));
         }
     } catch (error) {
         console.error("Login error:", error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send(JSON.stringify("Internal Server Error"));
     }
 });
 
