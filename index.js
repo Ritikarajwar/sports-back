@@ -69,26 +69,40 @@ app.options("/", (req, res) => {
 // })
 
 
-app.post('/login', async (req, res) => {
-    try {
-        let details = await db.collection('loginuser').find().toArray();
-        let name = req.body.username;
-        let passcode = req.body.password;
+// app.post('/login', async (req, res) => {
+//     try {
+//         let details = await db.collection('loginuser').find().toArray();
+//         let name = req.body.username;
+//         let passcode = req.body.password;
         
-        let user = details.find(user => user.username === name && user.password === passcode);
+//         let user = details.find(user => user.username === name && user.password === passcode);
 
-        if (user) {
-            let token = jwt.sign({ name }, 'secretkey', { expiresIn: 60 });
-            res.send(JSON.stringify({ token }));
-        } else {
-            res.status(401).send(JSON.stringify("Invalid credentials"));
-        }
-    } catch (error) {
-        console.error("Login error:", error);
-        res.status(500).send(JSON.stringify("Internal Server Error"));
+//         if (user) {
+//             let token = jwt.sign({ name }, 'secretkey', { expiresIn: 60 });
+//             res.send(JSON.stringify({ token }));
+//         } else {
+//             res.status(401).send(JSON.stringify("Invalid credentials"));
+//         }
+//     } catch (error) {
+//         console.error("Login error:", error);
+//         res.status(500).send(JSON.stringify("Internal Server Error"));
+//     }
+// });
+
+app.post("/login", async (req, res) => {
+    try {
+      const { name, password } = req.body;
+      const user = await User.findOne({ name, password });
+      if (user) {
+        res.send(true);
+      } else {
+        res.send(false);
+      }
+    } catch (err) {
+      console.log(err);
+      res.send(false);
     }
-});
-
+  });
 
 
 
