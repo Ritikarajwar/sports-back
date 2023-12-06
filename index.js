@@ -89,7 +89,7 @@ app.options("/", (req, res) => {
 //     }
 // });
 
-app.post("/login", async (req, res) => {
+app.post("/login",cors(), async (req, res) => {
     try {
       const { username, password } = req.body;
       const user = await loginuser.findOne({ username, password });
