@@ -91,8 +91,8 @@ app.options("/", (req, res) => {
 
 app.post("/login", async (req, res) => {
     try {
-      const { name, password } = req.body;
-      const user = await User.findOne({ name, password });
+      const { username, password } = req.body;
+      const user = await loginuser.findOne({ username, password });
       if (user) {
         res.send(true);
       } else {
